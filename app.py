@@ -1,51 +1,35 @@
-#!/usr/bin/env python
-
-import urllib
-import json
-import os
-
-from flask import Flask
-from flask import request
-from flask import make_response
-
-# Flask app should start in global layout
-app = Flask(__name__)
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import pyautogui
+import time
 
 
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    req = request.get_json(silent=True, force=True)
-
-    print("Request:")
-    print(json.dumps(req, indent=4))
-
-    res = makeWebhookResult(req)
-
-    res = json.dumps(res, indent=4)
-    print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
-
-def makeWebhookResult(req):
-   
-    speech = "The cost of shipping to " 
-
-    print("Response:")
-    print(speech)
-
-    return {
-        "speech": speech,
-        "displayText": speech,
-        #"data": {},
-        # "contextOut": [],
-        "source": "apiai-onlinestore-shipping"
-    }
+driver= webdriver.Chrome("C:\chromedriver.exe")
+driver.get("https://www.google.com/chrome/browser/desktop/index.html")
 
 
-if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
+elm = driver.find_element_by_link_text('Download Chrome')
+driver.implicitly_wait(5)
+elm.click()
+#driver.implicitly_wait(3)
 
-    print "Starting app on port %d" % port
+elm1 = driver.find_element_by_id('eula-accept')
+driver.implicitly_wait(3)
+elm1.click()
+time.sleep(8)
+#driver.implicitly_wait(100)
+#driver.get("chrome://downloads/")
+#print ("reached here")
+#elm2 = driver.find_element_by_id('save')
 
-    app.run(debug=True, port=port, host='0.0.0.0')
+#driver.implicitly_wait(5)
+#elm2.click()
+pyautogui.click([367,942])
+print ("clicked already")
+driver.implicitly_wait(3)
+pyautogui.click([103,954])
+time.sleep(1)
+pyautogui.click([693,517])
+print ("installing  google chrome software")
+
